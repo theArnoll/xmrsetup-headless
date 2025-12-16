@@ -25,7 +25,7 @@ wget https://raw.githubusercontent.com/theArnoll/rpi-xmrig-setup/main/rpi-xmrig-
 or the short link version:
 
 ```shell
-wget https://pse.is/rpi-xmrig-setup
+wget https://pse.is/xmr-setup
 ```
 
 I suggest **keeping your monitor connected** during the installation. You will need to note down the IP address displayed at the end of the setup in order to enter your crypto wallet to `~/start-xmrig.sh`.
@@ -58,3 +58,4 @@ The script installs `cockpit` in your Pi. Navigate to `https://[your_raspberry_p
 #### Tested on
 
 - Ubuntu 22.04 on VMWare (x64, 2 CPUs, 3.5GB RAM (to emulate the real RAM availability of a 4GB Pi))
+
