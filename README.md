@@ -40,11 +40,13 @@ I suggest **keeping your monitor connected** during the installation. You will n
 #### Then,
 
 ```shell
-chmod +x xmr-setup.sh
-./xmr-setup.sh
+chmod +x xmr-setup
+./xmr-setup
 ```
 
 #### After that,
+
+Enter your Linux password to start running the file.
 
 Enter the Wi-Fi name (SSID) and password to try to connect with Wi-Fi.
 
