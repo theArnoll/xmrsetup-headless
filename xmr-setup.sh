@@ -129,6 +129,7 @@ fi
 COMMENT
 echo "=== Configuring XMRig as a Systemd Service"
 
+# v Gemini generated code
 # 1. 建立 Systemd Service 檔案
 # 注意：這裡設定了 Restart=always，挖礦程式掛掉會自動重啟
 sudo bash -c "cat <<EOF > /etc/systemd/system/xmrig_miner.service
@@ -163,6 +164,7 @@ echo "=== Now installing Cockpit"
 sudo apt install -y -t ${VERSION_CODENAME}-backports cockpit || sudo apt install -y cockpit
 echo === Cockpit installation complete.
 IP_ADDR=$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if ($i=="src") print $(i+1)}')
+# ^ Gemini generated code
 
 echo
 echo ===================

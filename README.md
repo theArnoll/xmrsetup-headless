@@ -19,7 +19,9 @@ This file is for machines that runs Ubuntu Server to be configured to an XMRig m
 #### First,
 
 ```shell
-wget https://raw.githubusercontent.com/theArnoll/xmr-setup/main/xmr-setup.sh
+mkdir xmrsetup-headless
+cd xmrsetup-headless
+wget https://raw.githubusercontent.com/theArnoll/xmrsetup-headless/main/xmr-setup.sh
 ```
 
 or the short link version:
@@ -28,13 +30,16 @@ or the short link version:
 wget https://pse.is/xmr-setup
 ```
 
-I suggest **keeping your monitor connected** during the installation. You will need to note down the IP address displayed at the end of the setup in order to enter your crypto wallet to `~/start-xmrig.sh`.
+I suggest **keeping your monitor connected** during the installation. You will need to:
+
+- note down the IP address displayed at the end of the setup to enter your crypto wallet to `~/start-xmrig.sh` via cockpit (see [Accessing your machine](#accessing-your-machine)).
+- Enter Wi-Fi SSID and password
 
 #### Then,
 
 ```shell
-chmod +x xmr-setup
-./xmr-setup
+chmod +x xmr-setup.sh
+./xmr-setup.sh
 ```
 
 #### After that,
