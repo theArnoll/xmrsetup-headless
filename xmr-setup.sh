@@ -179,4 +179,4 @@ EOF
 cat lastword.txt
 echo The message has been saved to lastword.txt. You can check it again by running \"cat lastword.txt\".
 echo Now starting self-destruction process of this script.
-rm -- "$0"
+rm -- "$0" || rm ./xmr-setup.sh || echo "Failed to delete setup script. Please delete it manually by running \"rm ./xmr-setup.sh\""

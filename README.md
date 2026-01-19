@@ -8,7 +8,7 @@ This file is for machines that runs Ubuntu Server to be configured to an XMRig m
 
 - Log2Ram
 
-- XMRig ([coin]:[address] haven't set)
+- XMRig ([coin]:[address] haven't set) (Locally built)
 
 - Systemd (make XMRig able to start mining on boot)
 
@@ -27,6 +27,8 @@ wget https://raw.githubusercontent.com/theArnoll/xmrsetup-headless/main/xmr-setu
 or the short link version:
 
 ```shell
+mkdir xmrsetup-headless
+cd xmrsetup-headless
 wget https://pse.is/xmr-setup
 ```
 
@@ -62,4 +64,4 @@ The script installs `cockpit` in your machine. Navigate to `https://[your_machin
 
 #### Tested on
 
-- Ubuntu 22.04 on VMWare (x64, 2 CPUs, 3.5GB RAM (to emulate the real RAM availability of a 4GB Pi))
+- Ubuntu 22.04 on VMWare (x64, 2 CPUs, 3.5GB RAM (to emulate the real RAM availability of a 4GB Pi), 8GB on HDD)
