@@ -34,8 +34,8 @@ wget https://pse.is/xmr-setup
 
 I suggest **keeping your monitor connected** during the installation. You will need to:
 
-- note down the IP address displayed at the end of the setup to enter your crypto wallet to `~/start-xmrig.sh` via cockpit (see [Accessing your machine](#accessing-your-machine)).
 - Enter Wi-Fi SSID and password
+- note down the IP address displayed at the end of the setup to enter your crypto wallet to `~/start-xmrig.sh` via cockpit (see [Accessing your machine](#accessing-your-machine)).
 
 #### Then,
 

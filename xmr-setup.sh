@@ -64,7 +64,7 @@ echo === Swappiness configured.
 
 echo === Now installing Log2Ram to reduce SD card wear
 sudo apt install -y curl gnupg
-echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ bookworm main" | sudo tee /etc/apt/sources.list.d/azlux.list
+echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
 sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg https://azlux.fr/repo.gpg
 sudo apt update
 sudo apt install -y log2ram
@@ -168,9 +168,9 @@ IP_ADDR=$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if ($i=="src") print $
 # ^ Gemini generated code
 
 echo
-echo ===================
-echo = Setup complete! =
-echo ===================
+echo ┌───────────────────┬───┬───┐
+echo │ Setup complete!   │ _ │ X │
+echo └───────────────────┴───┴───┘
 echo
 cat <<EOF > lastword.txt
 You can access Cockpit by navigating to https://$IP_ADDR:9090
@@ -182,26 +182,6 @@ cat <<EOF > chkip.sh
 IP_ADDR=\$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if (\$i=="src") print \$(i+1)}')
 echo "Current IP Address: \$IP_ADDR"
 echo "So you can connect cockpit at: https://\$IP_ADDR:9090"
-EOF
-cat <<EOF > hotspot.sh
-#!/bin/bash
-WIFI_IFACE="$WIFI_IFACE"
-SSID="blackbox"
-PASSWORD="$WIFI_PASS"
-if ! sudo nmcli device wifi hotspot ifname "\$WIFI_IFACE" con-name "blackbox-Hotspot" ssid "\$SSID" password "\$PASSWORD"; then
-    echo "┌───┬───────┬─────────────────────────────────────────────────────────────┬───┬───┬───┐"
-    echo "│ ! │ Error │ Setup failed.                                               │ _ │ O │ X │"
-    echo "├───┴───────┴─────────────────────────────────────────────────────────────┴───┴───┴───┤"
-    echo "│ below this box is the internet interfaces detected on your system:                  │"
-    echo "│ Find the name of Wi-Fi card and edit this script (hotspot.sh)                       │"
-    echo "├─────────────────────────────────────────────────────────────────────────────────────┤"
-    echo "│ Available interfaces:                                                               │"
-    echo "│ ─────────────────────────────────────────────────────────────────────────────────── │"
-    ip -brief link | grep -v "lo" | sed 's/^/│ /'
-    echo "└─────────────────────────────────────────────────────────────────────────────────────┘"
-    exit 1
-fi
-echo "-> Hotspot created successfully!"
 EOF
 chmod +x chkip.sh
 echo The message has been saved to lastword.txt. You can check it again by running \"cat lastword.txt\".
