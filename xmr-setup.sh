@@ -185,10 +185,10 @@ echo "So you can connect cockpit at: https://\$IP_ADDR:9090"
 EOF
 cat <<EOF > hotspot.sh
 #!/bin/bash
-WIFI_IFACE="wlan0"
+WIFI_IFACE="$WIFI_IFACE"
 SSID="blackbox"
-PASSWORD="eightDigits"
-if ! sudo nmcli device wifi hotspot ifname "$WIFI_IFACE" con-name "blackbox-Hotspot" ssid "$SSID" password "$PASSWORD"; then
+PASSWORD="$WIFI_PASS"
+if ! sudo nmcli device wifi hotspot ifname "\$WIFI_IFACE" con-name "blackbox-Hotspot" ssid "\$SSID" password "\$PASSWORD"; then
     echo "┌───┬───────┬─────────────────────────────────────────────────────────────┬───┬───┬───┐"
     echo "│ ! │ Error │ Setup failed.                                               │ _ │ O │ X │"
     echo "├───┴───────┴─────────────────────────────────────────────────────────────┴───┴───┴───┤"
