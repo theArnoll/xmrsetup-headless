@@ -4,7 +4,7 @@ scriptDir=$(pwd)
 cd ~
 USER_HOME=$(pwd)
 USER=$(whoami)
-set -e
+# set -e
 
 echo === Please enter your password to proceed with the setup
 sudo -v
@@ -67,7 +67,7 @@ sudo apt install -y curl gnupg
 echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
 sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg https://azlux.fr/repo.gpg
 LOG2RAM_INSTALLED_FLAG=1
-if ! sudo apt update; then
+if sudo apt update; then
     sudo apt install -y log2ram
     sudo systemctl enable log2ram
     sudo systemctl start log2ram
