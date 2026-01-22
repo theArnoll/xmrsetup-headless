@@ -66,11 +66,16 @@ echo === Now installing Log2Ram to reduce SD card wear
 sudo apt install -y curl gnupg
 echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
 sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg https://azlux.fr/repo.gpg
-sudo apt update
-sudo apt install -y log2ram
-sudo systemctl enable log2ram
-sudo systemctl start log2ram
-echo === Log2Ram installation complete.
+LOG2RAM_INSTALLED_FLAG=1
+if ! sudo apt update; then
+    sudo apt install -y log2ram
+    sudo systemctl enable log2ram
+    sudo systemctl start log2ram
+    echo === Log2Ram installation complete.
+else 
+    LOG2RAM_INSTALLED_FLAG=0
+    echo "=!= Failed to add Log2Ram repository. Skipping Log2Ram installation."
+fi
 
 mkdir -p ./xmrig
 cd ./xmrig
@@ -169,7 +174,7 @@ IP_ADDR=$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if ($i=="src") print $
 
 echo
 echo ┌───────────────────┬───┬───┐
-echo │ Setup complete!   │ _ │ X │
+echo │ Setup complete!　 │ _ │ X │
 echo └───────────────────┴───┴───┘
 echo
 cat <<EOF > lastword.txt
@@ -183,6 +188,12 @@ IP_ADDR=\$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if (\$i=="src") print
 echo "Current IP Address: \$IP_ADDR"
 echo "So you can connect cockpit at: https://\$IP_ADDR:9090"
 EOF
+if [ $LOG2RAM_INSTALLED_FLAG -eq 1 ]; then
+    echo "Log2Ram was installed successfully. Your SD card lifespan should be improved."
+else
+    echo "Log2Ram installation was skipped due to ppa issues. Your SD card lifespan may not be optimized."
+    cat <<< "! Log2Ram is not installed. Please consider installing it manually to reduce SD card wear." >> lastword.txt
+fi
 chmod +x chkip.sh
 echo The message has been saved to lastword.txt. You can check it again by running \"cat lastword.txt\".
 echo Now starting self-destruction process of this script.
