@@ -183,6 +183,26 @@ IP_ADDR=\$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if (\$i=="src") print
 echo "Current IP Address: \$IP_ADDR"
 echo "So you can connect cockpit at: https://\$IP_ADDR:9090"
 EOF
+cat <<EOF > hotspot.sh
+#!/bin/bash
+WIFI_IFACE="wlan0"
+SSID="blackbox"
+PASSWORD="eightDigits"
+if ! sudo nmcli device wifi hotspot ifname "$WIFI_IFACE" con-name "blackbox-Hotspot" ssid "$SSID" password "$PASSWORD"; then
+    echo "┌───┬───────┬─────────────────────────────────────────────────────────────┬───┬───┬───┐"
+    echo "│ ! │ Error │ Setup failed.                                               │ _ │ O │ X │"
+    echo "├───┴───────┴─────────────────────────────────────────────────────────────┴───┴───┴───┤"
+    echo "│ below this box is the internet interfaces detected on your system:                  │"
+    echo "│ Find the name of Wi-Fi card and edit this script (hotspot.sh)                       │"
+    echo "├─────────────────────────────────────────────────────────────────────────────────────┤"
+    echo "│ Available interfaces:                                                               │"
+    echo "│ ─────────────────────────────────────────────────────────────────────────────────── │"
+    ip -brief link | grep -v "lo" | sed 's/^/│ /'
+    echo "└─────────────────────────────────────────────────────────────────────────────────────┘"
+    exit 1
+fi
+echo "-> Hotspot created successfully!"
+EOF
 chmod +x chkip.sh
 echo The message has been saved to lastword.txt. You can check it again by running \"cat lastword.txt\".
 echo Now starting self-destruction process of this script.
