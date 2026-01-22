@@ -64,8 +64,9 @@ echo === Swappiness configured.
 
 echo === Now installing Log2Ram to reduce SD card wear
 sudo apt install -y curl gnupg
-echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
-sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg https://azlux.fr/repo.gpg
+# echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
+echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ stable main" | sudo tee /etc/apt/sources.list.d/azlux.list
+sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg  https://azlux.fr/repo.gpg
 LOG2RAM_INSTALLED_FLAG=1
 if sudo apt update; then
     sudo apt install -y log2ram
@@ -191,7 +192,7 @@ EOF
 if [ $LOG2RAM_INSTALLED_FLAG -eq 1 ]; then
     echo "Log2Ram was installed successfully. Your SD card lifespan should be improved."
 else
-    echo "Log2Ram installation was skipped due to ppa issues. Your SD card lifespan may not be optimized."
+    echo "Log2Ram installation was skipped due to ppa (software source anyway) issues. Your SD card lifespan may not be optimized."
     cat <<< "! Log2Ram is not installed. Please consider installing it manually to reduce SD card wear." >> lastword.txt
 fi
 chmod +x chkip.sh
