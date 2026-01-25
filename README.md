@@ -6,13 +6,17 @@ This file is for machines that runs Ubuntu Server to be configured to an XMRig m
 
 - Swappiness (Swap when RAM usage hits 90%)
 
-- Log2Ram
+- HugePages (1280 HugePages for better mining performance)
 
 - XMRig ([coin]:[address] haven't set) (Locally built)
 
 - Systemd (make XMRig able to start mining on boot)
 
 - Cockpit
+
+- tailscale
+
+- Log2Ram
 
 ### Instruction:
 
@@ -36,6 +40,7 @@ I suggest **keeping your monitor connected** during the installation. You will n
 
 - Enter Wi-Fi SSID and password
 - note down the IP address displayed at the end of the setup to enter your crypto wallet to `~/start-xmrig.sh` via cockpit (see [Accessing your machine](#accessing-your-machine)).
+- Login tailscale in the end of script (If you don't want to use, you still need to Ctrl+C it)
 
 #### Then,
 
@@ -61,6 +66,13 @@ The script installs `cockpit` in your machine. Navigate to `https://[your_machin
 **Note:** You will likely see a "Your connection is not private" warning because Cockpit uses a self-signed certificate. This is normal; please proceed (click "Advanced" > "Proceed to...").
 
 **Login** with your username and password in your machine.
+
+Thank to tailscale, you can also manage you machine with `cockpit` via Tailscale IP when you're away from the local network of your machine.  
+You can find the Tailscale IP (start with 100.×.×.×) by:
+
+- [Tailscale Admin Console](https://login.tailscale.com/admin/machines)
+- Running `tailscale ip` in the Terminal of Cockpit or your machine.
+- Setup a Discord bot [with the script I wrote](https://github.com/theArnoll/serverboxDCutil) (host on your machine) and send `>server ip` to the server you invite your bot to
 
 ---
 

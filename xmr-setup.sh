@@ -53,30 +53,19 @@ NETPLAN_CONFIG
 fi
 echo === Wi-Fi configuration complete
 
-echo === Now configuring swappiness
+echo === Now configuring swappiness and hugepages
 if grep -q "vm.swappiness=10" /etc/sysctl.conf; then
     echo "Swappiness already configured. Skipping."
 else
     sudo sysctl vm.swappiness=10
     echo "vm.swappiness=10" | sudo tee -a /etc/sysctl.conf
 fi
-echo === Swappiness configured.
-
-echo === Now installing Log2Ram to reduce SD card wear
-sudo apt install -y curl gnupg
-# echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
-echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ stable main" | sudo tee /etc/apt/sources.list.d/azlux.list
-sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg  https://azlux.fr/repo.gpg
-LOG2RAM_INSTALLED_FLAG=1
-if sudo apt update; then
-    sudo apt install -y log2ram
-    sudo systemctl enable log2ram
-    sudo systemctl start log2ram
-    echo === Log2Ram installation complete.
-else 
-    LOG2RAM_INSTALLED_FLAG=0
-    echo "=!= Failed to add Log2Ram repository. Skipping Log2Ram installation."
+if grep -q "vm.nr_hugepages=1280" /etc/sysctl.conf; then
+    echo "HugePages already configured. Skipping."
+else
+    echo "vm.nr_hugepages=1280" | sudo tee -a /etc/sysctl.conf
 fi
+echo === Swappiness configured.
 
 mkdir -p ./xmrig
 cd ./xmrig
@@ -149,7 +138,6 @@ Wants=network-online.target
 Type=simple
 User=$USER
 WorkingDirectory=$USER_HOME
-# 下面這行換成你的實際執行指令
 ExecStart=$USER_HOME/start-xmrig.sh
 Restart=always
 RestartSec=10s
@@ -172,6 +160,31 @@ sudo apt install -y -t ${VERSION_CODENAME}-backports cockpit || sudo apt install
 echo === Cockpit installation complete.
 IP_ADDR=$(ip route get 8.8.8.8 | awk '{for(i=1;i<=NF;i++) if ($i=="src") print $(i+1)}')
 # ^ Gemini generated code
+
+curl -fsSL https://tailscale.com/install.sh | sh
+
+echo === Now installing Log2Ram to reduce SD card wear
+sudo apt install -y curl gnupg
+# echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ $(bash -c '. /etc/os-release; echo ${VERSION_CODENAME}') main" | sudo tee /etc/apt/sources.list.d/azlux.list
+echo "deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ stable main" | sudo tee /etc/apt/sources.list.d/azlux.list
+sudo wget -O /usr/share/keyrings/azlux-archive-keyring.gpg  https://azlux.fr/repo.gpg
+LOG2RAM_INSTALLED_FLAG=1
+if sudo apt update; then
+    sudo apt install -y log2ram
+    sudo systemctl enable log2ram
+    sudo systemctl start log2ram
+    echo === Log2Ram installation complete.
+else 
+    LOG2RAM_INSTALLED_FLAG=0
+    echo "=!= Failed to add Log2Ram repository. Skipping Log2Ram installation."
+fi
+
+echo
+echo ┌───────────────────────┬───┬───┐
+echo │ Login tailscale now　 │ _ │ X │
+echo └───────────────────────┴───┴───┘
+echo
+sudo tailscale up
 
 echo
 echo ┌───────────────────┬───┬───┐
