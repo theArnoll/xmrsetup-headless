@@ -79,3 +79,8 @@ You can find the Tailscale IP (start with 100.×.×.×) by:
 #### Tested on
 
 - Ubuntu 22.04 on VMWare (x64, 2 CPUs, 3.5GB RAM (to emulate the real RAM availability of a 4GB Pi), 8GB on HDD)
+- Intel N100 mini PC **`Currently running`** Spec:
+  - Intel N100
+  - 8GB DDR5
+  - 120GB 2.5" SSD (connected via USB)
+  - Ubuntu Server 24.04 LTS
