@@ -1,6 +1,6 @@
 This file is for machines that runs Ubuntu Server to be configured to an XMRig machine
 
-### What this script does
+## What this script does
 
 - Wi-Fi Configuration
 
@@ -18,9 +18,9 @@ This file is for machines that runs Ubuntu Server to be configured to an XMRig m
 
 - Log2Ram
 
-### Instruction:
+## Instruction:
 
-#### First,
+### First,
 
 ```shell
 mkdir xmrsetup-headless
@@ -42,14 +42,14 @@ I suggest **keeping your monitor connected** during the installation. You will n
 - note down the IP address displayed at the end of the setup to enter your crypto wallet to `~/start-xmrig.sh` via cockpit (see [Accessing your machine](#accessing-your-machine)).
 - Login tailscale in the end of script (If you don't want to use, you still need to Ctrl+C it)
 
-#### Then,
+### Then,
 
 ```shell
 chmod +x xmr-setup
 ./xmr-setup
 ```
 
-#### After that,
+### After that,
 
 Enter your Linux password to start running the file.
 
@@ -59,7 +59,7 @@ Wait until `Setup complete!` shows, and check your Cockpit IP address and note i
 
 You **have** to edit `~/start-xmrig.sh` to replace `[coin]:[address]` with your actual wallet details before rebooting in order to start mining.
 
-### Accessing your machine
+## Accessing your machine
 
 The script installs `cockpit` in your machine. Navigate to `https://[your_machines_ip]:9090` in your browser to manage the system, check status, and use the built-in Terminal (just like using PuTTY).
 
@@ -74,11 +74,11 @@ You can find the Tailscale IP (start with 100.×.×.×) by:
 - Running `tailscale ip` in the Terminal of Cockpit or your machine.
 - Setup a Discord bot [with the script I wrote](https://github.com/theArnoll/serverboxDCutil) (host on your machine) and send `>server ip` to the server you invited your bot to
 
-### Offloading Swap to Another Drive
+## Offloading Swap to Another Drive
 
 If you're on a dual boot machine, and you don't want system swap to be stored on the drive where the system you're running ollama at, follow these step:
 
-#### Prerequisite
+### Prerequisite
 
 The target drive must have a swap partition ready.
 If the drive you're going to store your swap is running another system as well, you should create a swap partition when installing the system. You may need to reinstall the system if you didn't create one during installation.
@@ -95,7 +95,7 @@ Be sure you at least created below partition:
 
 After that, you're free to go to the next step.
 
-#### Setting up
+### Setting up
 
 - Tested on Ubuntu Server 24.04 installed on USB external 2.5" SSD, Intel N100, 8GB Physical RAM, 8GB swap partition located at internal NVMe m.2 hard drive installed Lubuntu
 
@@ -122,7 +122,7 @@ Follow these step:
 #### Tested on
 
 - Ubuntu 22.04 on VMWare (x64, 2 CPUs, 3.5GB RAM (to emulate the real RAM availability of a 4GB Pi), 8GB on HDD)
-- Intel N100 mini PC **`Currently running`** Spec:
+- **`Currently running`** Intel N100 mini PC Spec:
   - Intel N100
   - 8GB DDR5
   - 120GB 2.5" SSD (connected via USB)
