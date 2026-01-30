@@ -26,7 +26,7 @@ else
     cat <<NETPLAN_CONFIG | sudo tee /etc/netplan/99-wifi-config.yaml > /dev/null
 network:
   version: 2
-  renderer: networkd
+  renderer: NetworkManager
   ethernets:
     eth0:
       dhcp4: true
