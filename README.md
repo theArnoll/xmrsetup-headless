@@ -41,6 +41,7 @@ I suggest **keeping your monitor connected** during the installation. You will n
 - Enter Wi-Fi SSID and password
 - note down the IP address displayed at the end of the setup to enter your crypto wallet to `~/start-xmrig.sh` via cockpit (see [Accessing your machine](#accessing-your-machine)).
 - Login tailscale in the end of script (If you don't want to use, you still need to Ctrl+C it)
+- **!** If tailscale isn't working on your internet environment, read [this](#if-tailscale-isnt-available-for-your-internet-environment)
 
 ### Then,
 
@@ -73,6 +74,23 @@ You can find the Tailscale IP (start with 100.×.×.×) by:
 - [Tailscale Admin Console](https://login.tailscale.com/admin/machines)
 - Running `tailscale ip` in the Terminal of Cockpit or your machine.
 - Setup a Discord bot [with the script I wrote](https://github.com/theArnoll/serverboxDCutil) (host on your machine) and send `>server ip` to the server you invited your bot to
+
+## If Tailscale isn't available for your internet environment
+
+Use ngrok and get a URL  
+(This script didn't set it up for you)
+
+> **Warning** │ Anyone who has your ngrok link will be able to access your Cockpit page or the service page you want to access remotely using this method. If anyone knows the account and password of your system, your account and password are weak and easy to guess, or the service doesn't require any identity authentication, and the page can modify your system, **don't use this method**. Find another way instead.
+
+1. Go to [ngrok's official website](https://ngrok.com/) and login or signup
+2. Go to ["Setup & Installation" tab in your ngrok dashboard](https://dashboard.ngrok.com/get-started/setup/linux)
+   * Make sure the platform is chose to Linux
+3. Follow the instruction in "( 1 ) Connect"
+4. Try running `ngrok http 9090` and see if your Cockpit shows up in your ngrok domain website
+   * You can find your domains (URLs) in the ["Universal Gateway > Domains" tab in your ngrok dashboard](https://dashboard.ngrok.com/domains), or send `>server ip` an see if an "ngrok URL" link shows up in the message if you've set up [the Discord bot utility I wrote](https://github.com/theArnoll/serverboxDCutil)
+   * If you're using cockpit, run `ngrok http 9090`. If you're running a website, run `ngrok http 80` etc.
+        "`ngrk http `" + port number the service you want to use = make your ngrok domain show the page of the service you want.
+        If you want it to be able to display different service as you add something in the end of the link, you may want to find a way to achieve it by online resources. If you find the way to do it, feel free to provide the way and make a PR.
 
 ## Offloading Swap to Another Drive
 
